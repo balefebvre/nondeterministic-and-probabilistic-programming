@@ -1,0 +1,23 @@
+# OCaml files
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+
+# ocamlbuild working directory
+src/_build/
+
+# ocamlbuild targets
+*.byte
+*.native
+
+# Emacs file
+*~
+
+# Archive
+*.tgz
