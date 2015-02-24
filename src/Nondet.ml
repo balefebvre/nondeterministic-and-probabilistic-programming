@@ -156,23 +156,25 @@ module Tree : NONDET = struct
 
 (** Monad operations *)
 
-  let ret (x: 'a): 'a mon = fun () -> [Val x]
+  let ret (x: 'a): 'a mon = (fun () -> [Val x])
 
   let rec bind (m: 'a mon) (f: 'a -> 'b mon): 'b mon =
     fun () ->
-      List.map (fun x -> match x with Val a -> Susp (f a) | Susp n -> Susp (bind n f)) (m ())
+      List.map
+	(fun x -> match x with
+	 | Val a -> Susp (f a)
+	 | Susp n -> Susp (bind n f))
+	(m ())
 
   let (>>=) = bind
 
 (** Nondeterminism *)
 
-  let choice (al: 'a mon list) : 'a mon =
-    fun () -> List.map (fun m -> Susp m) al
+  let choice (al: 'a mon list) : 'a mon = (fun () -> List.map (fun m -> Susp m) al)
 
-  let fail : 'a mon = fun () -> []
+  let fail : 'a mon = (fun () -> [])
 
-  let either (a: 'a mon) (b: 'a mon): 'a mon =
-    fun () -> [Susp a; Susp b]
+  let either (a: 'a mon) (b: 'a mon): 'a mon = (fun () -> [Susp a; Susp b])
 
   let (|||) = either
 
@@ -182,11 +184,11 @@ module Tree : NONDET = struct
     See project description for examples. *)
 
   let flatten (maxdepth: int) (m: 'a mon) : 'a case list =
-    let rec search_case depth (c: 'a case) : 'a case list =
+    let rec search_case (depth: int) (c: 'a case) : 'a case list =
       match c with
       | Val x -> [Val x]
       | Susp m -> search (depth - 1) (m ())
-    and search depth (l: 'a case list) : 'a case list =
+    and search (depth: int) (l: 'a case list) : 'a case list =
       match (depth, l) with
       | (0, l) -> l
       | (n, []) -> []
@@ -214,9 +216,11 @@ module Tree : NONDET = struct
 
 (** Fixpoint operators *)
 
-  let fix (f: 'a mon -> 'a mon) : 'a mon = failwith "TODO"
+  let fix (f: 'a mon -> 'a mon) : 'a mon =
+    let rec res : 'a mon = (fun () -> f res ()) in res
 
-  let fixparam (f: ('a -> 'b mon) -> ('a -> 'b mon)) : 'a -> 'b mon = failwith "TODO"
+  let fixparam (f: ('a -> 'b mon) -> ('a -> 'b mon)) : 'a -> 'b mon =
+    let rec res (x: 'a) : 'b mon = (fun () -> f res x ()) in res
 end
 
 (** {2 Adding local state to the choice tree monad} *)

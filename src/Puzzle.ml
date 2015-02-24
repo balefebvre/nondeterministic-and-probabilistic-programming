@@ -90,8 +90,3 @@ let print_trace t =
 
 let _ =
   print_run print_trace 50 solution
-
-  
-
-
-
