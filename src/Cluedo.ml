@@ -12,13 +12,13 @@ let whodunnit : suspect mon =
     (fun suspect ->
       let p =
 	match suspect with
-	|Alice -> 0.03
+	| Alice -> 0.03
 	| Bob -> 0.8
       in
       choose p (ret Gun) (ret Pipe) >>=
       (fun weapon ->
 	match weapon with
-	|Gun -> fail
+	| Gun -> fail
 	| Pipe -> ret (suspect))
     )
 
