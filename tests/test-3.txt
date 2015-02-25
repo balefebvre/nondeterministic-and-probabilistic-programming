@@ -1,0 +1,26 @@
+Result #1: int
+Exhaustive -- there are no other results
+Result #1: ((((int->int)->int)->int)->int)->int
+Result #2: (((int->int->int)->int)->int)->int
+Result #3: (((int->int)->int->int)->int)->int
+Result #4: (((int->int)->int)->int->int)->int
+Result #5: (((int->int)->int)->int)->int
+Result #6: ((int->(int->int)->int)->int)->int
+Result #7: ((int->int->int->int)->int)->int
+Result #8: ((int->int->int)->int->int)->int
+Result #9: ((int->int->int)->int)->int
+Result #10: ((int->int)->(int->int)->int)->int
+Result #11: ((int->int)->int->int->int)->int
+Result #12: ((int->int)->int->int)->int
+Result #13: ((int->int)->int)->int
+Result #14: (int->((int->int)->int)->int)->int
+Result #15: (int->(int->int->int)->int)->int
+Result #16: (int->(int->int)->int->int)->int
+Result #17: (int->(int->int)->int)->int
+Result #18: (int->int->(int->int)->int)->int
+Result #19: (int->int->int->int->int)->int
+Result #20: (int->int->int->int)->int
+Result #21: (int->int->int)->int
+Result #22: (int->int)->int
+Result #23: int->int
+Partial -- there are other possible results

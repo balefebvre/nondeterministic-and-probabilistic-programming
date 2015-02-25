@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Usage :
-#   bash build_archive.sh
+# Usage:
+#   bash build-archive.sh
 # 
 # Build the archive 'Baptiste_Lefebvre.tgz'.
 
