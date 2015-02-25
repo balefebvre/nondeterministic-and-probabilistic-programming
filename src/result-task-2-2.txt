@@ -1,8 +1,0 @@
-Result #1: true, true, true
-Result #2: true, true, false
-Result #3: true, false, true
-Result #4: false, true, true
-Exhaustive -- there are no other results
-Result #1: Bono and Edge go forth; Edge goes back; Adam and Larry go forth; Bono goes back; Bono and Edge go forth; 
-Result #2: Bono and Edge go forth; Bono goes back; Adam and Larry go forth; Edge goes back; Edge and Bono go forth; 
-Exhaustive -- there are no other results

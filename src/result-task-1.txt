@@ -1,3 +1,0 @@
-Result #1: Bono and Edge go forth; Bono goes back; Adam and Larry go forth; Edge goes back; Edge and Bono go forth; 
-Result #2: Bono and Edge go forth; Edge goes back; Adam and Larry go forth; Bono goes back; Bono and Edge go forth; 
-Exhaustive -- there are no other results
