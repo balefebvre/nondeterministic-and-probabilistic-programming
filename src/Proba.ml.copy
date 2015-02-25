@@ -92,65 +92,29 @@ module Tree : PROBA = struct
   type 'a mon = unit -> 'a case distribution
   and 'a case = Val of 'a | Susp of 'a mon
 
-  let ret (x: 'a) : 'a mon = (fun () -> [(Val x, 1.0)])
+  let ret (x: 'a) : 'a mon = failwith "TODO"
 
-  let rec bind (m: 'a mon) (f: 'a -> 'b mon): 'b mon =
-    fun () ->
-      List.map
-	(fun (x, p) -> match x with
-	 | Val a -> (Susp (f a), p)
-	 | Susp n -> (Susp (bind n f), p))
-	(m ())
+  let rec bind (m: 'a mon) (f: 'a -> 'b mon): 'b mon = failwith "TODO"
 
   let (>>=) = bind
 
-  let fail : 'a mon = (fun () -> [])
+  let fail : 'a mon = failwith "TODO"
 
   let observe (b: bool) : unit mon =
     if b then ret () else fail
 
-  let distr (d: 'a distribution) : 'a mon =
-    fun () -> List.map (fun (x, p) -> (Val x, p)) d
+  let distr (d: 'a distribution) : 'a mon = failwith "TODO"
 
   let flip (p: prob) : bool mon =
     distr [(true, p); (false, 1.0 -. p)]
 
-  let uniform (lo: int) (hi: int) : int mon =
-    let p : prob = 1.0 /. (float_of_int (hi - lo + 1)) in
-    let rec enum (n: int) (acc: int distribution) : int distribution =
-      if n < lo then acc else enum (n - 1) ((n, p) :: acc)
-    in
-    distr (enum hi [])
+  let uniform (lo: int) (hi: int) : int mon = failwith "TODO"
 
-  let choose (p: prob) (a: 'a mon) (b: 'a mon) : 'a mon =
-    fun () -> [(Susp a, p); (Susp b, 1.0 -. p)]
+  let choose (p: prob) (a: 'a mon) (b: 'a mon) : 'a mon = failwith "TODO"
 
-  (** Be vary careful to correctly combine probabilities when expanding a Susp case *)
-  let flatten (maxdepth: int) (m: 'a mon) : 'a case distribution =
-    let rec search_case (depth: int) (c: 'a case * prob) : 'a case distribution =
-      match c with
-      | (Val x, p) -> [c]
-      | (Susp m, p) -> search (depth - 1) (List.map (fun (x, q) -> (x, p *. q)) (m ()))
-    and search (depth: int) (l: 'a case distribution) : 'a case distribution =
-      match (depth, l) with
-      | (0, l) -> l
-      | (n, []) -> []
-      | (n, hd :: tl) -> search_case n hd @ search n tl
-    in
-    search maxdepth (m ())
+  let flatten (maxdepth: int) (m: 'a mon) : 'a case distribution = failwith "TODO"
 
-  (** Remember to normalize probabilities in the final distribution so that they sum to 1 *)
-  let run (maxdepth: int) (m: 'a mon) : 'a distribution * prob =
-    let rec process (l: 'a case distribution) (accu: 'a distribution) (prob: prob) : 'a distribution * prob =
-      match l with
-      | [] -> (accu, prob)
-      | (Val x, p) :: tl -> process tl ((x, p) :: accu) prob
-      | (Susp n, p) :: tl -> process tl accu (prob +. p)
-    in
-    let l = flatten maxdepth m in
-    let (d, p) = process l [] 0.0 in
-    normalize (remove_dups d, p)
-    
+  let run (maxdepth: int) (m: 'a mon) : 'a distribution * prob = failwith "TODO"
 
   let print_run f depth m = print_run_aux f (run depth m)
 

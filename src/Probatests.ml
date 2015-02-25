@@ -42,6 +42,3 @@ let rec rand3 () : int mon =
 let _ =
   printf "--- rand3\n";
   print_run (fun n -> printf "%d" n) 10 (rand3 ())
-
-
-    
