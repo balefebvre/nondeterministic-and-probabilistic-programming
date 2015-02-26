@@ -125,7 +125,7 @@ let any_term : int -> term mon = fixparam (fun any_term n ->
 
 (** Naive version *)
 let closed_terms_of_type t : term mon =
-  any_term (-1) >>= (fun a -> try checktype [] a t >>= (fun () -> (ret a)) with _ -> fail)
+  any_term 0 >>= (fun a -> try checktype [] a t >>= (fun () -> (ret a)) with _ -> fail)
 (** *)
 
 

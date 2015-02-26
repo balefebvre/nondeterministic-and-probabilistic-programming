@@ -51,6 +51,15 @@ ocamlbuild Cluedo.native
 ocamlbuild Sumless_imp.native
 ./Sumless_imp.native > $TEST/test-5.txt
 
-# TODO: complete
+# Monadic data structures and memoization
+## Task 6.1 and 6.3
+ocamlbuild Mlist.native
+./Mlist.native > $TEST/test-6-1-6-3.txt
+## Task 6.2
+ocamlbuild Testmemo.native
+./Testmemo.native > $TEST/test-6-2.txt
+## Task 6.4
+ocamlbuild Mtyping.native
+./Mtyping.native > $TEST/test-6-4.txt
 
 cd ..

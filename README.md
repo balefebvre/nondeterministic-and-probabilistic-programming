@@ -21,7 +21,7 @@ This programming project is performed for the course: [MPRI 2.4 - Functional pro
 - [x] Imperative nondeterministic programming
   - [x] Task 5
 - [ ] Monadic data structures and memoization
-  - [ ] Task 6.1
-  - [ ] Task 6.2
+  - [x] Task 6.1
+  - [x] Task 6.2
   - [ ] Task 6.3
   - [ ] Task 6.4

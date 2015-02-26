@@ -30,17 +30,24 @@ let _ =
 
 (** Operations over monadic lists *)
 
-let rec mlist_of_list (l: 'a list) : 'a mlist = failwith "TODO"
+let rec mlist_of_list (l: 'a list) : 'a mlist =
+  match l with
+  | [] -> nil
+  | hd :: tl -> cons hd (mlist_of_list tl)
 
-let rec list_of_mlist (ml: 'a mlist) : 'a list mon = failwith "TODO"
+let rec list_of_mlist (ml: 'a mlist) : 'a list mon =
+  ml >>= (function Nil -> (ret []) | Cons (hd, mtl) -> (list_of_mlist mtl) >>= (fun tl -> ret (hd :: tl)) )
 
-let rec append (ml1: 'a mlist) (ml2: 'a mlist) : 'a mlist = failwith "TODO"
+let rec append (ml1: 'a mlist) (ml2: 'a mlist) : 'a mlist =
+  ml1 >>= (function Nil -> ml2 | Cons (hd, mtl) -> (cons hd (append mtl ml2)))
 
-let rec mlist_eq (ml1: 'a mlist) (ml2: 'a mlist) : unit mon = failwith "TODO"
+let rec mlist_eq (ml1: 'a mlist) (ml2: 'a mlist) : unit mon =
+  ml1 >>= (function Nil -> (isnil ml2) | Cons (hd1, mtl1) -> (ml2 >>= (function Nil -> fail | Cons (hd2, mtl2) -> if hd1 = hd2 then mlist_eq mtl1 mtl2 else fail)))
 
 (** Does there exist two mlists that append to the given mlist? *)
 
-let can_split_mlist (ml: bool mlist) : unit mon = failwith "TODO"
+let can_split_mlist (ml: bool mlist) : unit mon =
+  mlist_eq ml (append any_bmlist any_bmlist)
 
 let _ =
   printf "-- can_split_mlist\n";

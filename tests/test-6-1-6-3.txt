@@ -1,0 +1,15 @@
+-- isnil
+Result #1: OK!
+Exhaustive -- there are no other results
+-- issingleton
+Result #1: OK!
+Result #2: OK!
+Exhaustive -- there are no other results
+-- can_split_mlist
+Result #1: OK!
+Result #2: OK!
+Result #3: OK!
+Result #4: OK!
+Result #5: OK!
+Result #6: OK!
+Exhaustive -- there are no other results

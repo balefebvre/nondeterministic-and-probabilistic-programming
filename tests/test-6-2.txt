@@ -1,0 +1,20 @@
+-- filter_true without memo
+Result #1: true
+Result #2: false
+Exhaustive -- there are no other results
+-- filter_true with memo
+Result #1: true
+Exhaustive -- there are no other results
+-- filter_both_true without memo
+Result #1: true,true
+Result #2: true,false
+Result #3: false,true
+Result #4: false,false
+Exhaustive -- there are no other results
+-- filter_true with 2 memo
+Result #1: true,true
+Exhaustive -- there are no other results
+-- filter_true with 1 memo
+Result #1: true,true
+Result #2: true,false
+Exhaustive -- there are no other results

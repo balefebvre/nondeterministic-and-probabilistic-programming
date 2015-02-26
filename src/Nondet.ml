@@ -344,7 +344,12 @@ module TreeState : NONDET_WITH_STATE = struct
     project description.  Do not try to implement them before you
     attack this last section. *)
 
-  let memo (a: 'a mon) : 'a mon = failwith "TODO"
+  let memo (a: 'a mon) : 'a mon =
+    let l = newref () in
+    function s ->
+      match Store.get s l with
+      | Some v -> [(Val v, s)]
+      | None -> (a >>= (function v -> (fun s -> [(Val v, Store.put s l v)]))) s
 
   let rec fixmemo (f: 'a mon -> 'a mon) : 'a mon = failwith "TODO"
 
