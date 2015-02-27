@@ -23,5 +23,5 @@ This programming project is performed for the course: [MPRI 2.4 - Functional pro
 - [ ] Monadic data structures and memoization
   - [x] Task 6.1
   - [x] Task 6.2
-  - [ ] Task 6.3
-  - [ ] Task 6.4
+  - [x] Task 6.3
+  - [x] Task 6.4

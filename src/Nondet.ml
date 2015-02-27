@@ -271,7 +271,7 @@ module TreeState : NONDET_WITH_STATE = struct
 	(fun (x, s) ->
 	  match x with
 	  | Val x -> (Susp (f x), s)
-	  | Susp n -> (Susp (bind n f)), s)
+	  | Susp n -> (Susp (bind n f), s))
 	(m s)
 
   let (>>=) = bind
@@ -351,6 +351,7 @@ module TreeState : NONDET_WITH_STATE = struct
       | Some v -> [(Val v, s)]
       | None -> (a >>= (function v -> (fun s -> [(Val v, Store.put s l v)]))) s
 
-  let rec fixmemo (f: 'a mon -> 'a mon) : 'a mon = failwith "TODO"
+  let rec fixmemo (f: 'a mon -> 'a mon) : 'a mon =
+    memo (fun s -> f (fixmemo f) s)
 
 end

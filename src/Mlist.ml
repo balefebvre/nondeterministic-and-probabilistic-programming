@@ -56,6 +56,11 @@ let _ =
 
 (** Adding memoization to the generation of boolean mlists *)
 
+(** Try to play together fix and memo
+let any_bmlist () : bool mlist = fix (fun any_bmlist ->
+  memo (choice [nil; cons false any_bmlist; cons true any_bmlist]))
+*)
+
 let any_bmlist () : bool mlist = fixmemo (fun any_bmlist ->
  choice [nil; cons false any_bmlist; cons true any_bmlist])
 
@@ -86,7 +91,13 @@ let _ =
   mlists.  Returns the two mlists after conversion to normal lists,
   so that we can print the results. *)
 
-let split_mlist (ml: bool mlist) : (bool list * bool list) mon = failwith "TODO"
+let split_mlist (ml: bool mlist) : (bool list * bool list) mon =
+  let ml1 = any_bmlist () in
+  let ml2 = any_bmlist () in
+  mlist_eq (append ml1 ml2) ml >>=
+    (fun () -> list_of_mlist ml1 >>=
+      (fun l1 -> list_of_mlist ml2 >>=
+	fun l2 -> ret (l1, l2)))
 
 (** Printing the results *)
 

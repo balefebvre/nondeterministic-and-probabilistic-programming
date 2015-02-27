@@ -13,3 +13,18 @@ Result #4: OK!
 Result #5: OK!
 Result #6: OK!
 Exhaustive -- there are no other results
+-- nil_mlists
+Result #1: []
+Exhaustive -- there are no other results
+-- singleton_mlists
+Result #1: [true]
+Result #2: [false]
+Exhaustive -- there are no other results
+-- split_mlist
+Result #1: [true; true; true; false; false], []
+Result #2: [true; true; true; false], [false]
+Result #3: [true; true; true], [false; false]
+Result #4: [true; true], [true; false; false]
+Result #5: [true], [true; true; false; false]
+Result #6: [], [true; true; true; false; false]
+Exhaustive -- there are no other results
