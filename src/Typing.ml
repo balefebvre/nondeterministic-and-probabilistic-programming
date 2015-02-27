@@ -38,29 +38,12 @@ let type_of_var (env: typenv) (v: var) : typ option =
 (** [typeof env a] computes (nondeterministically) the possible type(s)
   for term [a] in environment [env]. *)
 
-(** Naive version
-let rec typeof (env: typenv) (a: term) : typ mon =
-  any_typ >>= (fun t -> try checktype env a t >>= (fun () -> (ret t)) with _ -> fail)
-*)
-
-(** Improved version *)
 let rec typeof (env: typenv) (a: term) : typ mon =
   match a with
   | Const n -> (ret Int)
-  | Var v ->
-    begin
-      match type_of_var env v with
-      | Some t -> (ret t)
-      | None -> fail
-    end
+  | Var v -> (function Some t -> (ret t) | None -> fail) (type_of_var env v)
   | Lam (v, b) -> any_typ >>= (fun tv -> typeof ((v, tv) :: env) b >>= (fun tb -> (ret (Fun (tv, tb)))))
-  | App (b, c) -> typeof env c >>= (fun tc -> lamtypeof env b tc)
-    
-and lamtypeof (env: typenv) (a: term) (t: typ) : typ mon =
-  match a with
-  | Lam (v, b) -> typeof ((v, t) :: env) b
-  | _ -> fail
-(** *)
+  | App (b, c) -> typeof env b >>= (function Int -> fail | Fun (tb1, tb2) -> checktype env c tb1 >>= (function _ -> (ret tb2)))
 
 (** [checktype env a t] returns [()] if term [a] has type [t] in
   environment [env], and fails otherwise. *)
@@ -70,8 +53,8 @@ and checktype (env: typenv) (a: term) (t: typ) : unit mon =
   | (Const n, Int) -> (ret ())
   | (Var v, t) when (type_of_var env v = Some t) -> (ret ())
   | (Lam (v, b), Fun (tv, tb)) -> checktype ((v, tv) :: env) b tb
-  | (App (b, c), t) -> typeof env c >>= (fun tc -> lamtypeof env b tc >>= (fun td -> if td = t then (ret ()) else failwith "error"))
-  | _ -> failwith "error"
+  | (App (b, c), t) -> typeof env c >>= (fun tc -> checktype env b (Fun (tc, t)))
+  | _ -> fail
 
 let types_of_closed_term a = typeof [] a
 
@@ -118,16 +101,13 @@ let any_term : int -> term mon = fixparam (fun any_term n ->
 |||
     (any_term (n + 1) >>= (fun a -> ret (Lam (var_x n, a))))
 |||
-    (any_term (n + 1) >>= (fun a -> any_term n >>= (fun b -> ret (App (Lam (var_x n, a), b)))))
+    (any_term n >>= (fun a -> any_term n >>= (fun b -> ret (App (a, b)))))
 )
 
 (** Generate closed terms that have type [t]. *)
 
-(** Naive version *)
 let closed_terms_of_type t : term mon =
-  any_term 0 >>= (fun a -> try checktype [] a t >>= (fun () -> (ret a)) with _ -> fail)
-(** *)
-
+  any_term 0 >>= (fun a -> checktype [] a t >>= (fun () -> (ret a)))
 
 (* Printing of terms *)
 
@@ -155,9 +135,4 @@ and print_term_0 = function
 
 let ex3 = closed_terms_of_type (Fun(Int, Int))
 
-let _ = print_run print_term 25 ex3
-
-
-
-
-
+let _ = print_run print_term 22 ex3

@@ -12,15 +12,15 @@ This programming project is performed for the course: [MPRI 2.4 - Functional pro
   - [x] Task 2.1
   - [x] Task 2.2
   - [x] Task 2.3
-- [ ] A taste of Prolog
-  - [ ] Task 3.1
-  - [ ] Task 3.3
+- [x] A taste of Prolog
+  - [x] Task 3.1
+  - [x] Task 3.3
 - [x] Probabilistic programming
   - [x] Task 4.1
   - [x] Task 4.2
 - [x] Imperative nondeterministic programming
   - [x] Task 5
-- [ ] Monadic data structures and memoization
+- [x] Monadic data structures and memoization
   - [x] Task 6.1
   - [x] Task 6.2
   - [x] Task 6.3
