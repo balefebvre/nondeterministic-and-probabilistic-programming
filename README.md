@@ -6,6 +6,8 @@ the development of appropriate monads.
 
 This programming project is performed for the course: [MPRI 2.4 - Functional programming and type systems](http://gallium.inria.fr/~xleroy/mpri/2-4/index.html#project)
 
+For a full description of this project see [description.pdf](https://github.com/BaptisteLefebvre/nondeterministic-and-probabilistic-programming/raw/master/description.pdf)
+
 - [x] The naive monad for nondeterminism
   - [x] Task 1
 - [x] Choices trees

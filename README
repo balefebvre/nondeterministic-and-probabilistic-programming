@@ -1,0 +1,40 @@
+Here is the short README accompanying the .ml and .mli files of /src which
+contain my code for the programming project "Nondeterministic and probabilistic
+programming with monads and iterative deepening" (February 2015).
+
+I have completed all tasks.
+
+I have filled the holes carefully and then tested my implementation with tests
+provided. I have often changed the 'maxdepth' and sometimes write additional
+tests to check how it works well. In fact all the tests have been passed
+successfully.
+
+The .ml and .mli files in /src correspond to the origial files with the holes
+filled and two changes :
+
+  - in /src/Typing.ml to avoid failure with a stack overflow
+    from
+      let _ = print_run print_term 25 ex3
+    to
+      let _ = print_run print_term 22 ex3
+
+  - in /src/Mtyping.ml to fix generator of types which does not give types t
+    of the form  (t1 -> t2) -> int  where  t1 != t2  during the tests of
+    /src/Mtyping.ml
+    from
+      let any_mtyp() : mtyp =
+        fixmemo (fun any_mtyp -> mint ||| mfun any_mtyp any_mtyp)
+    to
+      let any_mtyp() : mtyp =
+        fixmemo
+          (fun any_mtyp1 ->
+            mint
+            ||| fixmemo
+	      (fun any_mtyp2 ->
+	        mfun any_mtyp1 mint
+                ||| mfun any_mtyp1 any_mtyp2))
+
+I have no further comments to add.
+
+Best regards,
+Baptiste Lefebvre
